@@ -88,6 +88,9 @@
   },
   "DashboardLayout": {
     "home": "Home",
+    "documents": "Documents",
+    "checks": "Plagiarism Checks",
+    "reports": "Reports",
     "todos": "Todos",
     "members": "Members",
     "billing": "Billing",
@@ -162,6 +165,18 @@
     "message_title": "Message",
     "message_description": "Enter a detailed message for your todo.",
     "submit_button": "Submit"
+  },
+  "Documents": {
+    "title_bar": "Documents",
+    "title_bar_description": "Manage your uploaded assignments and papers"
+  },
+  "PlagiarismCheck": {
+    "title_bar": "Plagiarism Checks",
+    "title_bar_description": "Run and view plagiarism detection results"
+  },
+  "Reports": {
+    "title_bar": "Reports",
+    "title_bar_description": "View and share detailed plagiarism reports"
   },
   "VeriTextHero": {
     "heading": "Academic integrity powered by intelligent AI",
