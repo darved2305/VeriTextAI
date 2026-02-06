@@ -1,0 +1,115 @@
+"use client";
+
+import { useState } from "react";
+import Link from "next/link";
+import ButtonLink from "@/components/ButtonLink";
+import WordMark from "@/components/WordMark";
+import { MdMenu, MdClose } from "react-icons/md";
+import clsx from "clsx";
+import { usePathname } from "next/navigation";
+
+const navigation = [
+  { label: "Features", link: "/#features", cta_button: false },
+  { label: "Integrations", link: "/#integrations", cta_button: false },
+  { label: "Pricing", link: "/#pricing", cta_button: false },
+  { label: "Start Free Trial", link: "/#trial", cta_button: true },
+];
+
+export default function NavBar() {
+  const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+
+  return (
+    <nav className="md-:py-6 px-4 py-4 md:px-6" aria-label="Main">
+      <div className="mx-auto flex max-w-6xl flex-col justify-between py-2 font-medium text-slate-900 md:flex-row md:items-center">
+        <div className="flex items-center justify-between">
+          <Link href="/" className="z-50" onClick={() => setOpen(false)}>
+            <WordMark />
+            <span className="sr-only">VeriText AI Home Page</span>
+          </Link>
+          <button
+            type="button"
+            className="block p-2 text-3xl text-slate-900 md:hidden"
+            aria-expanded={open}
+            onClick={() => setOpen(true)}
+          >
+            <MdMenu />
+            <span className="sr-only">Open menu</span>
+          </button>
+        </div>
+        {/* Mobile Nav */}
+        <div
+          className={clsx(
+            "ga-4 fixed bottom-0 left-0 right-0 top-0 z-40 flex flex-col items-end bg-white pr-4 pt-14 transition-transform duration-300 ease-in-out motion-reduce:transition-none md:hidden",
+            open ? "translate-x-0" : "translate-x-[100%]",
+          )}
+        >
+          <button
+            type="button"
+            className="fixed right-4 top-4 mb-4 block p-2 text-3xl text-slate-900 md:hidden"
+            aria-expanded={open}
+            onClick={() => setOpen(false)}
+          >
+            <MdClose />
+            <span className="sr-only">Close menu</span>
+          </button>
+
+          <div className="grid justify-items-end gap-8">
+            {navigation.map((item) => {
+              if (item.cta_button) {
+                return (
+                  <ButtonLink
+                    key={item.label}
+                    field={item.link}
+                    onClick={() => setOpen(false)}
+                    aria-current={
+                      pathname.includes(item.link) ? "page" : undefined
+                    }
+                  >
+                    {item.label}
+                  </ButtonLink>
+                );
+              }
+              return (
+                <Link
+                  key={item.label}
+                  className="block px-3 text-3xl first:mt-8"
+                  href={item.link}
+                  onClick={() => setOpen(false)}
+                  aria-current={
+                    pathname.includes(item.link) ? "page" : undefined
+                  }
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Desktop Nav */}
+        <ul className=" hidden gap-6 md:flex">
+          {navigation.map((item) => {
+            if (item.cta_button) {
+              return (
+                <li key={item.label}>
+                  <ButtonLink field={item.link}>{item.label}</ButtonLink>
+                </li>
+              );
+            }
+            return (
+              <li key={item.label}>
+                <Link
+                  className="inline-flex min-h-11 items-center text-slate-900"
+                  href={item.link}
+                >
+                  {item.label}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </nav>
+  );
+}

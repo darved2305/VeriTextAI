@@ -1,162 +1,60 @@
 # VeriText AI
 
-<p align="center">
-  <img height="300" src="public/veritext/dashboard.png" alt="VeriText AI Dashboard">
-</p>
+VeriText AI is a marketing and landing experience for an academic integrity and plagiarism detection platform, built with Next.js 16, TypeScript, Tailwind CSS, and Prismic. It showcases how educators can use AI-powered tooling to detect text and code plagiarism, integrate with existing LMS platforms, and streamline grading workflows.
 
-🎓 **VeriText AI** is an advanced academic integrity and plagiarism detection platform designed for educators. It detects plagiarism, paraphrasing, and AI-generated content in student submissions, integrating seamlessly with major Learning Management Systems.
+## Core Features
 
-## Features
-
-- 🔍 **AI Paraphrase Detection** - Detect sophisticated rewording attempts
-- 💻 **Code Plagiarism Scanner** - Purpose-built for programming assignments
-- 🎓 **LMS Integration** - Works with Canvas, Blackboard, Moodle, Google Classroom
-- ⚡ **Batch Processing** - Upload entire classes at once
-- 📊 **Detailed Reports** - Comprehensive integrity reports
-- 🌐 **Multi-Language** - Support for multiple languages via i18n
+- **Hero section with value proposition** – Highlights VeriText AI as an academic integrity and plagiarism detection tool for educators.
+- **Bento feature grid** – Visual grid explaining key capabilities like AI paraphrase detection, code plagiarism scanning, LMS integration, and batch processing.
+- **Showcase workflow section** – Illustrates a "built for your teaching workflow" story with imagery and copy focused on zero-disruption LMS integration.
+- **Integrations section** – Starfield background and imagery explaining integrations with major LMS platforms (Canvas, Blackboard, Moodle, Google Classroom, Schoology, etc.).
+- **Case studies section** – Logo + narrative tiles for institutions like Stanford and MIT showing trust and outcomes.
+- **Call to action slice** – Conversion-focused section encouraging educators to get started or contact sales.
+- **Dynamic CMS-driven pages** – Prismic-powered `[uid]` route to render arbitrary marketing/content pages from the CMS with slices (`/src/app/[uid]/page.tsx`).
+- **Slice-based content architecture** – Reusable, animated slices under `src/slices` (Hero, Bento, Showcase, Integrations, CaseStudies, CallToAction) wired via `SliceZone` and `src/slices/index.ts`.
+- **Responsive, polished UI** – Tailwind-driven layout, `Bounded` layout wrapper, and custom components like `NavBar`, `Footer`, `ButtonLink`, and `WordMark` for consistent brand feel.
+- **Animation & motion** – GSAP + custom `AnimatedContent` components for subtle entrance animations and starfield backgrounds, respecting reduced-motion preferences via `usePrefersReducedMotion`.
 
 ## Tech Stack
 
-- **Framework**: Next.js 14 with App Router
-- **Authentication**: Clerk (SSO, MFA, User Management)
-- **Database**: Drizzle ORM with PostgreSQL
-- **Styling**: Tailwind CSS + Shadcn UI
-- **Animations**: GSAP with ScrollTrigger
-- **Payments**: Stripe integration
-- **i18n**: next-intl (English, French)
+- **Framework:** Next.js 16 (App Router)
+- **Language:** TypeScript & React 18
+- **Styling:** Tailwind CSS + custom components
+- **CMS:** Prismic (`@prismicio/client`, `@prismicio/react`, slice-based content)
+- **Animation:** GSAP (`gsap`, `@gsap/react`)
+- **Icons:** `react-icons`
 
 ## Getting Started
 
-### Prerequisites
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+2. Configure Prismic:
+   - Set `NEXT_PUBLIC_PRISMIC_REPOSITORY` in your environment to your Prismic repository name (defaults to `"your-repo-name"` in `src/prismicio.ts`).
+   - Ensure the `page` custom type and slices (Hero, Bento, Showcase, Integrations, CaseStudies, CallToAction) are defined in your Prismic project.
+3. Run the development server:
+   ```bash
+   npm run dev
+   ```
+   Then open `http://localhost:3000` in your browser.
 
-- Node.js 20+
-- npm or yarn
+## Project Structure (Highlights)
 
-### Installation
-
-```bash
-# Clone the repository
-git clone https://github.com/yourusername/veritextai.git
-cd veritextai
-
-# Install dependencies
-npm install
-
-# Copy environment variables
-cp .env .env.local
-```
-
-### Environment Variables
-
-Create a `.env.local` file with:
-
-```shell
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_pub_key
-CLERK_SECRET_KEY=your_clerk_secret_key
-DATABASE_URL=your_database_url
-STRIPE_SECRET_KEY=your_stripe_secret_key
-STRIPE_WEBHOOK_SECRET=your_stripe_webhook_secret
-```
-
-### Development
-
-```bash
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) to see the application.
-
-## Project Structure
-
-```
-.
-├── public/veritext/          # VeriText assets and images
-├── src/
-│   ├── app/                  # Next.js App Router pages
-│   │   ├── [locale]/
-│   │   │   ├── (auth)/       # Authenticated routes (dashboard)
-│   │   │   └── (unauth)/     # Public routes (landing page)
-│   ├── components/
-│   │   └── veritext/         # VeriText UI components
-│   ├── features/
-│   │   └── veritext/         # VeriText feature slices
-│   ├── hooks/                # Custom React hooks
-│   ├── libs/                 # Library configurations
-│   ├── locales/              # i18n translations (en, fr)
-│   ├── models/               # Database models
-│   ├── styles/               # Global styles
-│   └── utils/                # Utility functions
-└── migrations/               # Database migrations
-```
-
-## Key Components
-
-### Landing Page Sections
-
-| Section | Description |
-|---------|-------------|
-| **Hero** | Animated hero with StarGrid background |
-| **Bento** | Feature grid with 4 key capabilities |
-| **Showcase** | Workflow integration demonstration |
-| **Integrations** | LMS platform connections |
-| **CaseStudies** | Stanford & MIT testimonials |
-| **CallToAction** | Final CTA with trial button |
-
-### Authentication
-
-- Powered by Clerk
-- SignIn, SignUp, Password Reset
-- Multi-Factor Authentication
-- Social Auth (Google, GitHub, etc.)
-- User Impersonation
-
-### Database
-
-- Drizzle ORM for type-safe queries
-- PostgreSQL for production
-- PGlite for local development
-- Automatic migrations on build
-
-## Commands
-
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start development server |
-| `npm run build` | Production build |
-| `npm run start` | Start production server |
-| `npm run check-types` | TypeScript type checking |
-| `npm run lint` | ESLint linting |
-| `npm run test` | Run unit tests |
-| `npm run test:e2e` | Run E2E tests with Playwright |
-| `npm run db:generate` | Generate database migrations |
-| `npm run db:studio` | Open Drizzle Studio |
+- `src/app/layout.tsx` – Root layout, global styles, header/footer, metadata.
+- `src/app/page.tsx` – Home page composing the main slices.
+- `src/app/[uid]/page.tsx` – Dynamic Prismic-driven pages using `SliceZone`.
+- `src/prismicio.ts` – Prismic client configuration and repository name.
+- `src/components/` – Shared UI components (Bounded, ButtonLink, Header, Footer, NavBar, StarGrid, WordMark).
+- `src/slices/` – Slice components for CMS-managed sections (Hero, Bento, Showcase, Integrations, CaseStudies, CallToAction).
+- `src/hooks/usePrefersReducedMotion.js` – Motion preference hook for more accessible animations.
 
 ## Deployment
 
-### Vercel (Recommended)
+This is a standard Next.js application and can be deployed to any platform that supports Next.js (e.g., Vercel, Azure Static Web Apps, Netlify). Make sure to configure your Prismic environment variables in your hosting provider before deploying.
 
-1. Push to GitHub
-2. Import to Vercel
-3. Add environment variables
-4. Deploy
+## Customization
 
-### Docker
-
-```bash
-docker build -t veritextai .
-docker run -p 3000:3000 veritextai
-```
-
-## Team
-
-Built by **Team GitGoneWild**
-
-## License
-
-Licensed under the MIT License - see [LICENSE](LICENSE) for details.
-
----
-
-<p align="center">
-  <strong>VeriText AI</strong> - Academic Integrity & Plagiarism Detection
-</p>
+- Update copy and imagery in the slice components under `src/slices` to match your own product.
+- Wire additional slices via `src/slices/index.ts` and your Prismic slice models.
+- Adjust branding (colors, typography, logo) via `src/app/globals.css`, Tailwind config, and components like `WordMark` and `NavBar`.
